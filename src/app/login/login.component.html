@@ -1,0 +1,25 @@
+<div class="container">
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input  ngModel type="email" class="form-control" id="email" name="email" #email="ngModel" required>
+          <div *ngIf="email.errors?.['required'] && email.touched && email.invalid" 
+          class="alert alert-danger">Email Required</div>
+        </div>
+        <div class="mb-3">
+          <label for="password"  class="form-label">Password</label>
+          <input ngModel type="password" class="form-control" id="password" name="password" required #password="ngModel">
+          <div *ngIf="password.errors?.['required'] && password.touched  && password.invalid" 
+          class="alert alert-danger">Password Required</div>
+        </div>
+        <!-- <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div> -->
+        <div class="mb-3">
+          <a routerLink="/user">Create New User</a>
+        </div>
+        <button type="submit" class="btn btn-primary" 
+        [disabled]="loginForm.form.touched && loginForm.form.invalid">Submit</button>
+      </form>
+</div>
