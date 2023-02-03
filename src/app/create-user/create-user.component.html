@@ -1,18 +1,18 @@
 <div class="container">
     <div class="row">
-        <form #createUserForm="ngForm" (ngSubmit)="createUser(createUserForm)" >
+        <form [formGroup]="createUserForm"  (ngSubmit)="createUser()" >
             <div class="row">
                 <div class="col-md-6">
                     <label for="firstName" class="form-label">First Name</label>
-                    <input  ngModel type="firstName" class="form-control" id="firstName" name="firstName" #firstName="ngModel" required>
-                    <div *ngIf="firstName.errors?.['required'] && firstName.touched && firstName.invalid" 
+                    <input   type="firstName" class="form-control" id="firstName" name="firstName"  formControlName="firstName">
+                    <div  
                         class="custom-alert">FirstName Required
                     </div>
                 </div>
                 <div class="col-md-6">
                     <label for="lastName" class="form-label">Last Name</label>
-                    <input  ngModel type="lastName" class="form-control" id="lastName" name="lastName" #lastName="ngModel" required>
-                    <div *ngIf="lastName.errors?.['required'] && lastName.touched && lastName.invalid" 
+                    <input   type="lastName" class="form-control" id="lastName" name="lastName"  formControlName="lastName">
+                    <div 
                         class="custom-alert">LastName Required
                     </div>
                 </div>
@@ -20,24 +20,27 @@
             <div class="row">
                 <div class="col-md-12">
                     <label for="email" class="form-label">Email address</label>
-                    <input  ngModel type="email" class="form-control" id="email" name="email" #email="ngModel" required>
-                    <div *ngIf="email.errors?.['required'] && email.touched && email.invalid" 
+                    <input   type="email" class="form-control" id="email" name="email" formControlName="email" required>
+                    <!-- <div 
                         class="custom-alert">Email Required
+                    </div> -->
+                    <div *ngIf="email!.errors?.['alreadyExists']" class="alert alert-danger">
+                        {{validationErrorMessages.email.alreadyExists}}
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <label for="password"  class="form-label">Password</label>
-                    <input ngModel type="password" class="form-control" id="password" name="password" required #password="ngModel">
-                    <div *ngIf="password.errors?.['required'] && password.touched  && password.invalid" 
+                    <input  type="password" class="form-control" id="password" name="password" required formControlName="password">
+                    <div 
                         class="custom-alert">Password Required
                     </div>
                 </div>
                 <div class="col-md-6">
                     <label for="confirmPassword"  class="form-label">Confirm Password</label>
-                    <input ngModel type="password" class="form-control" id="confirmPassword" name="confirmPassword" required #confirmPassword="ngModel">
-                    <div *ngIf="confirmPassword.errors?.['required'] && confirmPassword.touched  && confirmPassword.invalid" 
+                    <input  type="password" class="form-control" id="confirmPassword" name="confirmPassword" required formControlName="confirmPassword">
+                    <div 
                         class="custom-alert">Password Required
                     </div>
                 </div>
@@ -45,7 +48,7 @@
             <div class="row">
                 <div class="col-md-12" style="margin-top: 10px;">
                     <button type="submit" class="btn btn-primary" 
-                        [disabled]="createUserForm.form.touched && createUserForm.form.invalid">Create User
+                        >Create User
                     </button>
                 </div>
             </div>

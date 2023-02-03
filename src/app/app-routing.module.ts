@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { UserComponent } from './user/user.component';
+import { CreateUserComponent } from './create-user/create-user.component';
+import { MailsentComponent } from './mailsent/mailsent.component';
+import { NewLoginComponent } from './new-login/new-login.component';
 
 const routes: Routes = [
-  {path:'',component:LoginComponent},
-  {path:'user',component:UserComponent}
+  {path:'',component: NewLoginComponent},
+  {path:'create-user',component:CreateUserComponent},
+  {path:'emailsent', component:MailsentComponent }
 ];
 
 @NgModule({
