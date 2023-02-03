@@ -5,15 +5,25 @@
                 <div class="col-md-6">
                     <label for="firstName" class="form-label">First Name</label>
                     <input   type="firstName" class="form-control" id="firstName" name="firstName"  formControlName="firstName">
-                    <div  
-                        class="custom-alert">FirstName Required
+                    <div *ngIf="firstName!.invalid && (firstName!.dirty || firstName!.touched)" class="form-text text-danger">
+                        <div *ngIf="firstName!.errors?.['required']"
+                          >{{validationErrorMessages.firstName.required}}
+                        </div>
+                        <div *ngIf="firstName!.errors?.['minLength']"
+                          >{{validationErrorMessages.firstName.minLength}}
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <label for="lastName" class="form-label">Last Name</label>
                     <input   type="lastName" class="form-control" id="lastName" name="lastName"  formControlName="lastName">
-                    <div 
-                        class="custom-alert">LastName Required
+                    <div *ngIf="lastName!.invalid && (lastName!.dirty || lastName!.touched)" class="form-text text-danger">
+                        <div *ngIf="lastName!.errors?.['required']"
+                          >{{validationErrorMessages.lastName.required}}
+                        </div>
+                        <div *ngIf="lastName!.errors?.['minLength']"
+                          >{{validationErrorMessages.lastName.minLength}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -21,27 +31,36 @@
                 <div class="col-md-12">
                     <label for="email" class="form-label">Email address</label>
                     <input   type="email" class="form-control" id="email" name="email" formControlName="email" required>
-                    <!-- <div 
-                        class="custom-alert">Email Required
-                    </div> -->
-                    <div *ngIf="email!.errors?.['alreadyExists']" class="alert alert-danger">
-                        {{validationErrorMessages.email.alreadyExists}}
-                    </div>
+                    <div *ngIf="email!.invalid && (email!.dirty || email!.touched)" class="form-text text-danger">
+                        <div *ngIf="email!.errors?.['required']"
+                          >{{validationErrorMessages.email.required}}
+                        </div>
+                        <div *ngIf="email.errors.emailExists">
+                            {{validationErrorMessages.email.alreadyExists}}
+                        </div>
+                      </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <label for="password"  class="form-label">Password</label>
                     <input  type="password" class="form-control" id="password" name="password" required formControlName="password">
-                    <div 
-                        class="custom-alert">Password Required
+                    <div *ngIf="password!.invalid && (password!.dirty || password!.touched)" class="form-text text-danger">
+                        <div *ngIf="password!.errors?.['required']"
+                          >{{validationErrorMessages.password.required}}
+                        </div>
+                        <div *ngIf="password!.errors?.['minLength']"
+                          >{{validationErrorMessages.password.minLength}
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <label for="confirmPassword"  class="form-label">Confirm Password</label>
                     <input  type="password" class="form-control" id="confirmPassword" name="confirmPassword" required formControlName="confirmPassword">
-                    <div 
-                        class="custom-alert">Password Required
+                    <div *ngIf="confirmPassword!.invalid && (confirmPassword!.dirty || confirmPassword!.touched)" class="form-text text-danger">
+                        <div *ngIf="confirmPassword!.errors?.['required']"
+                          >{{validationErrorMessages.confirmPassword.required}}
+                        </div>
                     </div>
                 </div>
             </div>

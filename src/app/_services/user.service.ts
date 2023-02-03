@@ -8,7 +8,7 @@ import { stringify } from 'querystring';
 })
 export class UserService {
 
-  PATH_OF_API = "http://35.237.177.182/api/v1/auth";
+  PATH_OF_API = "http://localhost:8080/api/v1/auth";
   user :any; 
   requestHeaders = new HttpHeaders(
     { "No-Auth":"True"}
@@ -30,10 +30,10 @@ export class UserService {
     return this.httpclient.get(url,{headers: this.requestHeaders});
   }
   public resendVerificationEmail(userData:any){
-    return this.httpclient.post(this.PATH_OF_API+"/api/v1/auth/resendVerificationEmail",userData,{headers: this.requestHeaders});
+    return this.httpclient.post(this.PATH_OF_API+"/resendVerificationEmail",userData,{headers: this.requestHeaders});
   }
   public isUserExists(email: string){
-    console.log(email);
+    return this.httpclient.get(this.PATH_OF_API+"/checkUserExists?email="+email,{headers: this.requestHeaders});
   }
   public getUser() {
     return this.user;
