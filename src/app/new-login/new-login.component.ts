@@ -16,6 +16,8 @@ export class NewLoginComponent implements OnInit {
     },
     'password': {
       'required': 'Password is required',
+      'userDisabled': 'User is disabled click here to',
+      'invalidCred': 'Invalid Credentials'
     }
   }
   constructor(private userService: UserService,
@@ -43,11 +45,31 @@ export class NewLoginComponent implements OnInit {
   login(){
     this.userService.login(this.loginForm.value).subscribe(
       (response:any) =>{
-        this.userAuthService.setToken(response.token);
+        if(response.message == 'Bad Credentials'){
+          this.loginForm.get('password')?.setErrors({ invalidCred : true });
+        }else if(response.message == 'User is disabled'){
+            this.loginForm.get('password')?.setErrors({ userDisabled : true});
+        }else{
+          this.userAuthService.setToken(response.token);
+        }
       },
       (error) => {
         this.router.navigate(['/']);
       }
-    );
-}
+    );}
+
+    
+    resendMail() {
+      this.userService.resendVerificationEmail(this.loginForm.value).subscribe(
+        (response:any) => {
+            if(response.message.startsWith("Verification Email Sent Succesfully")){
+              this.router.navigate(['/emailsent']);
+            }else{
+              //todo
+            }
+         },
+        (error) => {
+  
+        });
+    }
 }

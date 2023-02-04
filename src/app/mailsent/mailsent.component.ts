@@ -12,14 +12,6 @@ export class MailsentComponent implements OnInit {
               ) { }
   ngOnInit(): void {
   }
-  resendMail(){
-    this.userService.resendVerificationEmail(this.userService.getUser().email).subscribe(
-      (response) => {
-
-      },
-      (error) => {
-
-      });
-  }
+  
  
 }

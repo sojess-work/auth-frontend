@@ -17,6 +17,7 @@ export class UserService {
     ) { }
 
   public login(loginData:any){
+    this.user = loginData;
     return this.httpclient.post(this.PATH_OF_API+"/authenticate",loginData,{ headers: this.requestHeaders});
   }
 
@@ -36,6 +37,7 @@ export class UserService {
     return this.httpclient.get(this.PATH_OF_API+"/checkUserExists?email="+email,{headers: this.requestHeaders});
   }
   public getUser() {
-    return this.user;
+    const dUser = this.user;
+    return dUser;
   }
 }

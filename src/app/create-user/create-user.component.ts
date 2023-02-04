@@ -3,8 +3,6 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
 import { Router } from '@angular/router';
 import { UserService } from '../_services/user.service';
 import { CustomValidators } from '../validators/custom-sync-validators';
-import { debounceTime, distinctUntilChanged, Observable } from "rxjs";
-import { of } from "rxjs";
 import { EmailExistsValidator } from '../validators/email-exists';
 
 @Component({
@@ -14,50 +12,56 @@ import { EmailExistsValidator } from '../validators/email-exists';
 })
 export class CreateUserComponent implements OnInit {
   error="";
-  createUserForm : any;
+  createUserForm : FormGroup;
+  
   validationErrorMessages = {
     'firstName': {
       'required': 'First Name is required',
-      'minLength':'First Name should be greater than 2 characters'
+      'minlength':'First Name should be greater than 2 characters'
     },
     'lastName': {
       'required': 'Last Name is required',
-      'minLength':'Last Name should be greater than 2 characters'
+      'minlength':'Last Name should be greater than 2 characters'
     },
     'email': {
       'required': 'Email is required',
-      'alreadyExists' : 'User already exists'
+      'alreadyExists' : 'User already exists',
+      'invalid':'Please enter a valid email'
     },
     'password': {
       'required': 'Password is required',
-      'minLength':'Password should be greater than 8 characters'
+      'minlength':'Password should be greater than 8 characters'
     },
     'confirmPassword': {
       'required': 'Confirm password is required',
+      'notMatch' : 'Confirm password must match with password'
     }
   }
   constructor(private userService: UserService,
               private router : Router,
               private builder : FormBuilder,
-              private emailExistsValidator: EmailExistsValidator) { }
+              private emailExistsValidator: EmailExistsValidator) { 
+                this.createUserForm = this.builder.group({
+                  firstName :new  FormControl('',
+                    [Validators.required, Validators.minLength(2)]),
+              
+                  lastName: new FormControl('',
+                  [Validators.required, Validators.minLength(2)]),
+              
+                  email : new FormControl('',
+                    [Validators.required,Validators.email ],this.emailExistsValidator.validate.bind(this.emailExistsValidator)),
+              
+                  password : new FormControl('',
+                  [Validators.required, Validators.minLength(8)]),
+              
+                  confirmPassword : new FormControl('',
+                  [Validators.required])
+                }, { 
+                  validators: CustomValidators.isConfirmPassSame('password','confirmPassword')
+                })
+              }
 
   ngOnInit(): void {
-    this.createUserForm = this.builder.group({
-      firstName :new  FormControl('',
-        [Validators.required, Validators.minLength(2)]),
-  
-      lastName: new FormControl('',
-      [Validators.required, Validators.minLength(2)]),
-  
-      email : new FormControl('',
-        [Validators.required ],this.emailExistsValidator.validate.bind(this.emailExistsValidator)),
-  
-      password : new FormControl('',
-      [Validators.required, Validators.minLength(8)]),
-  
-      confirmPassword : new FormControl('',
-      [Validators.required])
-    });
   }
 
     get firstName(){
@@ -83,35 +87,18 @@ export class CreateUserComponent implements OnInit {
     console.log(this.createUserForm);
     this.userService.createUser(this.createUserForm.value)
     .subscribe(
-      (response) => {
-        this.router.navigate(['/emailsent']);
+      (response: any) => {
+        
+        if(response.message.startsWith("Verification Email Sent Succesfully")){
+          this.router.navigate(['/emailsent']);
+        }else{
+          //Todo
+        }
       },
       (err) => {
         console.log("error",err);
       }
     );
   }
-
-//    asyncIfUserExists(control : AbstractControl):  Observable<ValidationErrors | null> {
-//     if(!control.valueChanges || control.pristine){
-//         return of(null);
-//     }else{
-//         this.userService.isUserExists(control.value).pipe(
-//             distinctUntilChanged(),
-//             debounceTime(600)).subscribe(
-//                 (response: any) => {
-//                     if(!response.hasErrors){
-//                         console.log(response);
-//                         if(response == true){
-//                             return {emailExists:true}
-//                         }else{
-//                             return of(null);
-//                         }
-//                     }
-//                     return of(null);
-//                 })
-//                 return of(null);
-//         }
-// }
 
 }
