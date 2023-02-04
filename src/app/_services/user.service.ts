@@ -8,7 +8,7 @@ import { stringify } from 'querystring';
 })
 export class UserService {
 
-  PATH_OF_API = "http://localhost:8080/api/v1/auth";
+  PATH_OF_API = "http://35.237.177.182/api/v1/auth";
   user :any; 
   requestHeaders = new HttpHeaders(
     { "No-Auth":"True"}
