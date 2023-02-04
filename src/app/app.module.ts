@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { MailsentComponent } from './mailsent/mailsent.component';
 import { NewLoginComponent } from './new-login/new-login.component';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { CreateUserComponent } from './create-user/create-user.component';
     MailsentComponent,
     NewLoginComponent,
     CreateUserComponent,
+    ConfirmEmailComponent,
   ],
   imports: [
     BrowserModule,

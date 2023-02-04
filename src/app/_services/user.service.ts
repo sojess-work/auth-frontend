@@ -33,8 +33,14 @@ export class UserService {
   public resendVerificationEmail(userData:any){
     return this.httpclient.post(this.PATH_OF_API+"/resendVerificationEmail",userData,{headers: this.requestHeaders});
   }
+  public resendEmail(token: string){
+    return this.httpclient.get(this.PATH_OF_API+"/resendVerificationEmail?token="+token,{headers: this.requestHeaders});
+  }
   public isUserExists(email: string){
     return this.httpclient.get(this.PATH_OF_API+"/checkUserExists?email="+email,{headers: this.requestHeaders});
+  }
+  public confirmEmail(token:any){
+    return this.httpclient.get(this.PATH_OF_API+"/confirmUser?token="+token,{headers: this.requestHeaders});
   }
   public getUser() {
     const dUser = this.user;

@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-md-6 offset-md-3 mt-4">
+        <h3>Email Confirmation Page</h3>
+        <div class="alert alert-primary" *ngIf="emailConfirmed" role="alert">
+            Email Confirmed!
+        </div>
+        <div class="alert alert-warning" *ngIf="urlExpired" role="alert">
+            Url expired click here to <a href="#" (click)="resendMail()">resend email</a>
+        </div>
+        <div class="alert alert-warning" *ngIf="invalidUrl" role="alert">
+            Invalid url provided
+        </div>
+        <div class="alert alert-warning" *ngIf="internalServerError" role="alert">
+            Internal Server Error
+        </div>
+    </div>
+</div>
