@@ -35,6 +35,7 @@ export class ConfirmEmailComponent implements OnInit {
       },
       (error) => {
         this.internalServerError= true;
+        //test
       })
   }
 
