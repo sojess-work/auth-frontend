@@ -5,4 +5,4 @@ RUN npm install
 RUN npm run build --prod
 
 FROM nginx:alpine
-ADD dist/auth_frontend /usr/share/nginx/html
+ADD /app/dist/auth_frontend /usr/share/nginx/html
