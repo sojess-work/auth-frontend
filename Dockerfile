@@ -1,6 +1,12 @@
 
 
-FROM nginx:alpine
-ADD  dist/auth_frontend /usr/share/nginx/html
-RUN   status ngin
-RUN   restart mgin
+FROM node:latest AS server-build
+WORKDIR /root/
+COPY dist ./my-app/dist
+COPY package*.json ./
+RUN npm install
+COPY server.js .
+
+EXPOSE 3080
+
+CMD ["node", "server.js"]
