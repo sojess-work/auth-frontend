@@ -1,0 +1,42 @@
+def app
+pipeline {
+    agent any
+
+    tools {nodejs "NodeJS"}
+    stages{
+        stage('Checkout'){
+            steps{
+                deleteDir()
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/sojess-work/auth-frontend.git']]])  
+            }
+        }
+        
+        stage('Build'){
+            steps{
+                sh 'npm install'
+                sh 'npm install -g @angular/cli@13.3.10'
+                sh 'npm run-script build'
+            }
+        }
+        
+        stage('Build image') {
+            
+            steps{
+                script{
+                     app = docker.build("verdant-tempest-376308/myauthapp-frontend")
+                }
+            }
+        }
+
+        stage('Push image to gcr') {
+            steps{
+                script{
+                    docker.withRegistry('https://gcr.io', 'gcr:auth-app') {
+                        app.push("auth-frontend-0.0.1-SNAPSHOT")
+                    }                    
+                }
+            }
+        }
+        
+    }
+}
