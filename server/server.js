@@ -8,8 +8,8 @@ app.use(bodyParser.json());
 app.use(express.static(process.cwd()+"/authapp-frontend/dist/auth_frontend/"));
 
 
-app.get('/', (req,res) => {
-  res.sendFile(process.cwd()+"/my-app/dist/angular-nodejs-example/index.html")
+app.get('/*', (req,res) => {
+  res.sendFile(process.cwd()+"/authapp-frontend/dist/authapp-frontend/index.html")
 });
 
 app.listen(port, () => {
