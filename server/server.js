@@ -9,7 +9,7 @@ app.use(express.static(process.cwd()+"/authapp-frontend/dist/auth_frontend/"));
 
 
 app.get('/*', (req,res) => {
-  res.sendFile(process.cwd()+"/authapp-frontend/dist/authapp-frontend/index.html")
+  res.sendFile(process.cwd()+"/authapp-frontend/dist/auth_frontend/index.html")
 });
 
 app.listen(port, () => {
